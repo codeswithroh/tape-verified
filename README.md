@@ -2,6 +2,8 @@
 
 **Copy trading for tokenized stocks, where every return is proven on-chain. Settled in USDG on Robinhood Chain.**
 
+**Live:** https://tape-verified.vercel.app. Use *Connect → Demo wallet* for instant gas and 10,000 test USDG.
+
 Finfluencers sell returns nobody can check. India's regulator, SEBI, had to set up an agency (PaRRVA) just to verify past returns. Singapore's MAS has warned influencers about unlicensed advice. Robinhood launched verified, copyable trades (Robinhood Social) only inside its US app. Robinhood Stock Tokens, though, are sold in 120+ countries where that app isn't available.
 
 On Tape, the chain is the verification agency:

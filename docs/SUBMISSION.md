@@ -70,6 +70,7 @@ USDG is the deposit asset, the quote asset for every trade, the cash leg of ever
 ## Links
 
 - App: https://tape-verified.vercel.app
+- Code: https://github.com/codeswithroh/tape-verified
 - Stylus engine: `0xEF9611533407D99e9c287480955A2923d8d6cC96` (both chains)
 - TapeFactory: `0x031cBa7db6325aaA1D81533573D2A33B0fcC16Db` (both chains)
 - Explorer (Robinhood testnet): https://explorer.testnet.chain.robinhood.com/address/0x031cBa7db6325aaA1D81533573D2A33B0fcC16Db
