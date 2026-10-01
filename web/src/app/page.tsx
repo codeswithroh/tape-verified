@@ -78,14 +78,16 @@ function Hero() {
           </div>
         </div>
 
-        <div className="relative hidden min-h-[520px] lg:block">
+        <div className="relative hidden min-h-[620px] lg:block">
           <div className="absolute left-0 top-10 animate-rise [animation-delay:200ms]">
             <div className="relative"><FakePost /></div>
           </div>
           <div className="absolute right-0 top-0 animate-rise [animation-delay:450ms]">
             <LiveReceipt />
           </div>
-          <Seal size={120} className="absolute bottom-6 left-24 text-ink animate-rise [animation-delay:700ms]" />
+          <div className="absolute left-1/2 top-[470px] z-10 -translate-x-1/2 animate-rise rounded-full bg-paper/90 p-1.5 shadow-[0_12px_30px_-12px_rgba(14,14,12,0.35)] backdrop-blur-sm [animation-delay:700ms]">
+            <Seal size={128} className="text-ink" />
+          </div>
         </div>
       </div>
     </section>
@@ -272,7 +274,7 @@ function FinalCta() {
           Launch Tape <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
-      <Seal size={260} className="absolute -bottom-16 right-8 text-ink/80" />
+      <Seal size={240} check="var(--color-ink)" className="absolute right-[8%] top-1/2 hidden -translate-y-1/2 text-ink/85 md:block" />
     </section>
   );
 }
