@@ -9,13 +9,13 @@ import { createPublicClient, http, parseAbi, decodeFunctionData } from "viem";
 
 const here = dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: join(here, "..", ".env") });
-const CHAIN = 46630;
-const EXPLORER = "https://explorer.testnet.chain.robinhood.com/api/v2";
+const CHAIN = Number(process.env.CHAIN ?? 46630);
+const EXPLORER = CHAIN === 46630 ? "https://explorer.testnet.chain.robinhood.com/api/v2" : "https://arbitrum-sepolia.blockscout.com/api/v2";
 const dep = JSON.parse(readFileSync(join(here, "..", "contracts", "deployments", `${CHAIN}.json`), "utf8"));
 const hist = JSON.parse(readFileSync(join(here, "data", "history.json"), "utf8"));
 const manifestPath = join(here, "data", `replay-${CHAIN}.json`);
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
-const pub = createPublicClient({ transport: http(process.env.RH_TESTNET_RPC) });
+const pub = createPublicClient({ transport: http(CHAIN === 46630 ? process.env.RH_TESTNET_RPC : process.env.ARB_SEPOLIA_RPC) });
 const feedAbi = parseAbi(["function update(int256)"]);
 const engineAbi = parseAbi(["function count(address) view returns (uint256)", "function checkpointAt(address,uint256) view returns (uint256,uint256)"]);
 
@@ -29,7 +29,12 @@ for (;;) {
   const r = await fetch(`${EXPLORER}/addresses/${dep.deployer}/transactions${params}`).then((x) => x.json());
   for (const t of r.items) {
     if (t.to?.hash?.toLowerCase() !== nvdaFeed || t.status !== "ok") continue;
-    const { args } = decodeFunctionData({ abi: feedAbi, data: t.raw_input });
+    let args;
+    try {
+      ({ args } = decodeFunctionData({ abi: feedAbi, data: t.raw_input }));
+    } catch {
+      continue; // setUpdater and other admin calls
+    }
     const day = priceToDay.get(args[0]);
     if (day !== undefined) setAt.push({ ts: Math.floor(new Date(t.timestamp).getTime() / 1000), day });
   }

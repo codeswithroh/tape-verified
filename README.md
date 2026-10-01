@@ -74,6 +74,19 @@ forge test --match-path 'test/fork/*' -vv
   checkpoint + in-kind redemption of real stock tokens: ok
 ```
 
+## Stylus vs Solidity
+
+`scripts/bench.mjs` runs the same track records through the Stylus engine and the Solidity reference on a local Nitro devnode. Both return identical results for every size.
+
+| Checkpoints | Solidity `metrics()` gas | Stylus `metrics()` gas | Stylus advantage |
+|---|---|---|---|
+| 30 | 143,489 | 128,851 | 1.11× |
+| 70 | 300,482 | 219,070 | 1.37× |
+| 150 | 612,126 | 402,452 | 1.52× |
+| 300 | 1,196,520 | 746,235 | 1.60× |
+
+The advantage grows with history length, because the analytics loop is compute-bound. `record()` currently costs more in Stylus (83.8k vs 51.2k gas). The Rust storage layout writes the price and the timestamp separately, while Solidity packs them into one slot. Packing them into one word is the obvious next optimisation; it waits for an engine redeploy because vaults pin the engine address.
+
 ## Tests
 
 ```
