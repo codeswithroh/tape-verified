@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore, type ReactNode } from "react";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { wagmiConfig } from "@/lib/wagmi";
@@ -30,8 +30,22 @@ type Net = { chainId: SupportedChainId; setChainId: (id: SupportedChainId) => vo
 const NetCtx = createContext<Net>({ chainId: DEFAULT_CHAIN_ID, setChainId: () => {} });
 export const useNetwork = () => useContext(NetCtx);
 
+/** Ask the server to mirror fresh mainnet prices into the testnet feeds (throttled on-chain). */
+const relayed = new Set<number>();
+function useRelay(chainId: SupportedChainId) {
+  useEffect(() => {
+    if (relayed.has(chainId)) return;
+    relayed.add(chainId);
+    fetch(`/api/relay?chain=${chainId}`, { method: "POST" })
+      .then((r) => r.json())
+      .then((r) => r.hash && setTimeout(() => qc.invalidateQueries(), 4000))
+      .catch(() => {});
+  }, [chainId]);
+}
+
 export function Providers({ children }: { children: ReactNode }) {
   const chainId = useSyncExternalStore(subscribe, read, () => DEFAULT_CHAIN_ID);
+  useRelay(chainId);
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={qc}>

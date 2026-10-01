@@ -7,6 +7,9 @@ import { ConnectButton, FaucetButton, NetworkSwitch, useUsdgBalance } from "./Wa
 import { Logo } from "@/components/ui/Logo";
 import { fmtUsd } from "@/lib/format";
 import { usePrices } from "@/hooks/useTape";
+import { useNetwork } from "@/components/Providers";
+import { CHAINS } from "@/lib/chains";
+import { DEPLOYMENTS } from "@/lib/contracts";
 
 const NAV = [
   { href: "/app", label: "Discover", icon: Compass, exact: true },
@@ -35,6 +38,16 @@ function Ticker() {
   );
 }
 
+function ContractsLink() {
+  const { chainId } = useNetwork();
+  const url = CHAINS.find((c) => c.id === chainId)?.blockExplorers?.default.url;
+  return (
+    <a href={`${url}/address/${DEPLOYMENTS[chainId].factory}`} target="_blank" className="text-dim hover:text-mute" title="Contracts on explorer">
+      <ArrowUpRight size={16} />
+    </a>
+  );
+}
+
 export function Shell({ children }: { children: ReactNode }) {
   const path = usePathname();
   const bal = useUsdgBalance();
@@ -56,9 +69,7 @@ export function Shell({ children }: { children: ReactNode }) {
             );
           })}
         </nav>
-        <a href="https://github.com" className="text-dim hover:text-mute" title="Contracts">
-          <ArrowUpRight size={16} />
-        </a>
+        <ContractsLink />
       </aside>
 
       <header className="sticky top-0 z-20 flex h-12 items-center gap-3 border-b border-line bg-ink/85 pl-4 pr-3 backdrop-blur md:pl-[92px]">

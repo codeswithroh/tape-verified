@@ -63,5 +63,6 @@
   "registry": "0x7fc05a6FE237D5690886EC95BEFdaeFD3cAaF136",
   "router": "0xa8100b0C13D5eC28A0e38882Cfd051453AEbad6C",
   "stylusEngine": true,
-  "usdg": "0x91f85A812a43A27E03d514569dF2e9b3aEa27B42"
+  "usdg": "0x91f85A812a43A27E03d514569dF2e9b3aEa27B42",
+  "batcher": "0xcac3BC696867fB16286EdCFA9fedAaeB9FD3EdCc"
 }

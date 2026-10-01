@@ -2,10 +2,11 @@ import { createConfig, http } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { createPublicClient, http as vhttp, type PublicClient } from "viem";
 import { robinhoodTestnet, arbitrumSepolia, type SupportedChainId } from "./chains";
+import { demoConnector } from "./demoWallet";
 
 export const wagmiConfig = createConfig({
   chains: [robinhoodTestnet, arbitrumSepolia],
-  connectors: [injected()],
+  connectors: [injected(), demoConnector],
   transports: {
     [robinhoodTestnet.id]: http(robinhoodTestnet.rpcUrls.default.http[0], { batch: true }),
     [arbitrumSepolia.id]: http(arbitrumSepolia.rpcUrls.default.http[0], { batch: true }),
