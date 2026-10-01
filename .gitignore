@@ -1,0 +1,10 @@
+.gstack/
+node_modules/
+contracts/out/
+contracts/cache/
+contracts/broadcast/*/31337/
+engine/target/
+.env
+.DS_Store
+scripts/node_modules/
+contracts/deployments/412346.json
