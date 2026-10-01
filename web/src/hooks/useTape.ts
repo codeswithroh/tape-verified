@@ -238,11 +238,33 @@ export function usePositions(user?: Address) {
     queryFn: async (): Promise<Position[]> => {
       const pc = publicClient(chainId);
       const bals = await pc.multicall({ contracts: vs.map((v) => ({ address: v.address, abi: abi.vault, functionName: "balanceOf" as const, args: [user!] as const })) });
-      const ev = abi.vault.find((x) => x.type === "event" && x.name === "Deposited");
+      // Average-cost basis: replay this wallet's deposits and redemptions in order; a redemption of
+      // x% of shares removes x% of the remaining cost.
+      const dep = abi.vault.find((x) => x.type === "event" && x.name === "Deposited");
+      const red = abi.vault.find((x) => x.type === "event" && x.name === "Redeemed");
+      const addrs = vs.map((v) => v.address);
+      const [ins, outs] = await Promise.all([
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        getLogsChunked(chainId, { address: addrs, event: dep, args: { receiver: user } } as any),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        getLogsChunked(chainId, { address: addrs, event: red, args: { owner: user } } as any),
+      ]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const logs: any[] = await getLogsChunked(chainId, { address: vs.map((v) => v.address), event: ev, args: { receiver: user } } as any);
-      const cost: Record<string, number> = {};
-      for (const l of logs) cost[l.address.toLowerCase()] = (cost[l.address.toLowerCase()] ?? 0) + usdg(l.args.usdgIn);
+      const events = ([...ins, ...outs] as any[]).sort((x, y) => (x.blockNumber === y.blockNumber ? x.logIndex - y.logIndex : Number(x.blockNumber - y.blockNumber)));
+      const book: Record<string, { shares: number; cost: number }> = {};
+      for (const l of events) {
+        const k = l.address.toLowerCase();
+        const b = (book[k] ??= { shares: 0, cost: 0 });
+        if (l.eventName === "Deposited") {
+          b.shares += wad(l.args.shares);
+          b.cost += usdg(l.args.usdgIn);
+        } else {
+          const s = wad(l.args.shares);
+          b.cost -= b.shares ? b.cost * Math.min(1, s / b.shares) : 0;
+          b.shares -= s;
+        }
+      }
+      const cost = Object.fromEntries(Object.entries(book).map(([k, b]) => [k, b.cost]));
       return vs
         .map((v, i) => {
           const shares = wad((bals[i].result as bigint) ?? 0n);

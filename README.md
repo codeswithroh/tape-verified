@@ -44,6 +44,8 @@ On Tape, the chain is the verification agency:
 | `contracts/src/mocks/` | Testnet stand-ins with the same ABIs as mainnet: stock tokens, feeds, router, USDG |
 | `scripts/relay.mjs` | Copies Robinhood Chain **mainnet** Chainlink prices into the testnet feeds |
 | `scripts/smoke.sh` | End-to-end smoke test against any deployment |
+| `scripts/history.mjs`, `seed.mjs` | Pull 69 trading days of mainnet Chainlink closes; replay them through 4 demo manager vaults on testnet |
+| `web/` | Next.js app: landing page (`/`) and the app (`/app`: discover, vault, portfolio, manage, launch) |
 
 ## Deployments
 
@@ -94,6 +96,14 @@ cd scripts && npm i && npm run relay
 ```
 
 Use `https://robinhood-testnet.drpc.org` and `https://arbitrum-sepolia-rpc.publicnode.com` for Stylus activation. The official public RPCs reject it.
+
+## Demo data
+
+The four demo vaults (Semis Momentum, Index Steady, Mag 7 Equal Weight, Tesla Maxi) traded through the real vault contracts while real mainnet prices from Jun 23 to Sep 30, 2026 were replayed day by day. The UI labels them "Replay". Their checkpoints are real on-chain stamps, but they were compressed into one session, so on-chain timestamps are minutes apart. `scripts/data/replay-46630.json` maps each stamp to the trading day it replays. Every checkpoint after the replay is live.
+
+```
+cd web && npm i && npm run dev     # http://localhost:3000
+```
 
 ## Known limits
 

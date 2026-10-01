@@ -43,8 +43,10 @@ export function EquityChart({ series, height = 300 }: { series: Point[]; height?
     setHover(Math.max(0, Math.min(series.length - 1, Math.round(t * (series.length - 1)))));
   };
 
-  const label = (pt: Point) => pt.date ?? new Date(pt.ts * 1000).toISOString().slice(0, 10);
-  const ticks = [0, Math.floor(series.length / 3), Math.floor((2 * series.length) / 3), series.length - 1];
+  const intraday = series.at(-1)!.ts - series[0].ts < 2 * 86400 && !series[0].date;
+  const label = (pt: Point) => pt.date ?? new Date(pt.ts * 1000).toISOString().slice(0, intraday ? 16 : 10).replace("T", " ");
+  const axis = (pt: Point) => (pt.date ? pt.date.slice(5) : intraday ? new Date(pt.ts * 1000).toISOString().slice(11, 16) : label(pt).slice(5));
+  const ticks = Array.from(new Set([0, Math.floor(series.length / 3), Math.floor((2 * series.length) / 3), series.length - 1]));
 
   return (
     <div ref={ref} className="relative select-none" onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
@@ -79,7 +81,7 @@ export function EquityChart({ series, height = 300 }: { series: Point[]; height?
       </div>
       <div className="mt-1 flex justify-between num text-[10px] uppercase tracking-wider text-dim">
         {ticks.map((t) => (
-          <span key={t}>{label(series[t]).slice(5)}</span>
+          <span key={t}>{axis(series[t])}</span>
         ))}
       </div>
     </div>

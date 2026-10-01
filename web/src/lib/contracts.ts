@@ -28,7 +28,10 @@ export const REPLAYS: Record<SupportedChainId, Replay> = {
 };
 
 /** Smoke-test vaults created during deployment checks; not shown in the app. */
-export const HIDDEN_VAULTS = new Set(["0x30f6f71b6dfe91dca216f29ae6d0affae097a4f9"]);
+export const HIDDEN_VAULTS = new Set([
+  "0x30f6f71b6dfe91dca216f29ae6d0affae097a4f9", // deployment smoke test
+  "0x0c26728cbd9d6eddaa780a8e2afbb2bfc90e1c6f", // UI QA run
+]);
 
 export const DEPLOY_BLOCK: Record<SupportedChainId, bigint> = { 46630: 127106419n, 421614: 314616732n };
 
