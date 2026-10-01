@@ -9,3 +9,6 @@ engine/target/
 scripts/node_modules/
 contracts/deployments/412346.json
 contracts/broadcast/*/412346/
+scripts/data/*.log
+web/tsconfig.tsbuildinfo
+.claude/

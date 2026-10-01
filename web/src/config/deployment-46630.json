@@ -1,0 +1,67 @@
+{
+  "assets": {
+    "AAPL": {
+      "feed": "0x854018D77F5db9B6C587e9FBDfF85c9E102A7Dc1",
+      "mainnetFeed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
+      "token": "0xaE0cEbf52c2c2c22F87BEEDd71298e3F66b87052"
+    },
+    "AMD": {
+      "feed": "0x4E0170e9dFd907A103F4406e89885DaaD834F4A5",
+      "mainnetFeed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
+      "token": "0xAA720d870Cb6b1de80D9Bb6aDc06Bd8Ed6E39960"
+    },
+    "AMZN": {
+      "feed": "0x73f36ccA0cD531C0A0915341284c1BC31e59187C",
+      "mainnetFeed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
+      "token": "0xd032BD52d1222568C35b9541F307f881B5Aefc16"
+    },
+    "GOOGL": {
+      "feed": "0x364379Db8852635bf69Ecb571f4C80BA4E85B4e2",
+      "mainnetFeed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
+      "token": "0x12FE9f4439c49EF84136fdf5d984aF75728155d4"
+    },
+    "META": {
+      "feed": "0x61e04006A6b2A4dAB43AB0d4D3f2382132BB3485",
+      "mainnetFeed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
+      "token": "0x565FABb4ae677f9cE8b59E5fA79466d0f0E18C03"
+    },
+    "MSFT": {
+      "feed": "0x2a68Aa9aeBecd40319f9b4d74Ab84cc9797aFc34",
+      "mainnetFeed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
+      "token": "0x3297B3F90FEF700307De9363292BC63B6A9a78b7"
+    },
+    "NVDA": {
+      "feed": "0x77BC3A4c7dD2A0Ea6179CC06dA5b77Dc2F2D0dFe",
+      "mainnetFeed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
+      "token": "0xa9E7Fb97BFBE55de4335071Fe4a1803767a117a6"
+    },
+    "PLTR": {
+      "feed": "0x19Acf83051283eBe911a5632bd7b3dfD28D23Acb",
+      "mainnetFeed": "0x820ABedFF239034956B7A9d2F0a331f9F075eB4c",
+      "token": "0x59813f7D09C67ceF15D124D35A356C88777187AD"
+    },
+    "QQQ": {
+      "feed": "0x951f4480525d094cA472AcDBD32fc4873318C1e7",
+      "mainnetFeed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
+      "token": "0xA54317023D45ca3eB0CB8fe8eaB2Ee08B979e3EE"
+    },
+    "SPY": {
+      "feed": "0x90ED20f74393C3b25F42488445d8Ff49D1B3f08D",
+      "mainnetFeed": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
+      "token": "0x9892f2710229b6f8615493CE1403253DDc3C3B79"
+    },
+    "TSLA": {
+      "feed": "0x29D48FC10c6d50f3A09F9b2f4cA7b988ba61e6C2",
+      "mainnetFeed": "0x4A1166a659A55625345e9515b32adECea5547C38",
+      "token": "0x725fA8edf487ABA5E71533508FD3FCe74A7D64bB"
+    }
+  },
+  "chainId": 46630,
+  "deployer": "0xEa90E9885F4fbdB2333d2454A4Deb54d8a55050c",
+  "engine": "0xEF9611533407D99e9c287480955A2923d8d6cC96",
+  "factory": "0x031cBa7db6325aaA1D81533573D2A33B0fcC16Db",
+  "registry": "0x7fc05a6FE237D5690886EC95BEFdaeFD3cAaF136",
+  "router": "0xa8100b0C13D5eC28A0e38882Cfd051453AEbad6C",
+  "stylusEngine": true,
+  "usdg": "0x91f85A812a43A27E03d514569dF2e9b3aEa27B42"
+}
