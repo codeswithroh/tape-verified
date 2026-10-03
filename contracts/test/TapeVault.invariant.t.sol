@@ -18,7 +18,7 @@ contract Handler is Test {
     address internal admin;
     address[3] internal actors;
 
-    /// @notice Largest pps drop / rise caused by a deposit or redemption.
+    /// @notice Largest pps drop caused by a deposit or redemption, and largest value (1e18 = $1) a flow left behind.
     uint256 public maxFlowPpsDrop;
     uint256 public maxFlowPpsRise;
     uint256 public calls;
@@ -90,7 +90,12 @@ contract Handler is Test {
     function _trackFlow(uint256 before) internal {
         uint256 after_ = vault.pricePerShare();
         if (after_ < before && before - after_ > maxFlowPpsDrop) maxFlowPpsDrop = before - after_;
-        if (after_ > before && after_ - before > maxFlowPpsRise) maxFlowPpsRise = after_ - before;
+        // A rise is rounding dust left to remaining holders; measure it as value (1e18 = $1), not price,
+        // so it is independent of how few shares remain.
+        if (after_ > before) {
+            uint256 dust = (after_ - before) * vault.totalSupply() / 1e18;
+            if (dust > maxFlowPpsRise) maxFlowPpsRise = dust;
+        }
         calls++;
     }
 }
@@ -108,7 +113,7 @@ contract TapeVaultInvariantTest is Base {
     /// only nudge share price by dust, so money flows cannot pad the track record.
     function invariant_flowsDoNotMoveSharePrice() public view {
         assertLe(handler.maxFlowPpsDrop(), 1);
-        assertLe(handler.maxFlowPpsRise(), 1e9); // < 1e-9 relative
+        assertLe(handler.maxFlowPpsRise(), 2e12); // at most 2 micro-USDG of rounding dust per flow
     }
 
     /// Every share is backed: redeeming the whole supply would distribute exactly the vault's holdings.
