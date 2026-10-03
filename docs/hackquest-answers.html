@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tape: HackQuest answers</title>
+<style>
+  :root { --ink: #0e0e0c; --paper: #f7f4ec; --mute: #5a554b; --signal: #c2470f; --line: #ddd5c4; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 80px; }
+  .field { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 28px 32px; margin: 18px 0 40px; }
+  .tag { font: 600 12px/1 ui-monospace, Menlo, monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--signal); }
+  .hint { color: var(--mute); font-size: 14px; margin: 6px 0 0; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .field h2 { font-size: 20px; margin: 24px 0 8px; }
+  .field h2:first-child { margin-top: 0; }
+  .field h3 { font-size: 17px; margin: 18px 0 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 15px; }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3efe6; }
+  code { font: 14px ui-monospace, Menlo, monospace; background: #f3efe6; padding: 1px 5px; border-radius: 4px; }
+  a { color: var(--signal); }
+</style>
+</head>
+<body>
+<main>
+<h1>Tape: HackQuest form answers</h1>
+<p class="hint">Select everything inside a white box and paste it into the matching HackQuest field. Headings, bold, lists and tables carry over.</p>
+
+<!-- ============================ DESCRIPTION ============================ -->
+<p class="tag">Field 1 · Description</p>
+<div class="field">
+
+<h2>Tape: returns you can't fake</h2>
+<p><b>Copy trading for tokenized stocks, where every return is proven on-chain.</b> Managers run public vaults of Robinhood Stock Tokens. A Rust engine on <b>Arbitrum Stylus</b> stamps every return on an append-only tape. Followers copy with <b>USDG</b> and can leave in kind at any time.</p>
+<p>🔗 <b>Live app:</b> <a href="https://tape-verified.vercel.app">tape-verified.vercel.app</a>. Click <b>Connect → Demo wallet</b> for instant testnet gas and 10,000 USDG; no wallet setup is needed.<br />
+💻 <b>Code:</b> <a href="https://github.com/codeswithroh/tape-verified">github.com/codeswithroh/tape-verified</a></p>
+
+<h2>The problem</h2>
+<p>Stock tips are sold on screenshots. Anyone can post "+312% this quarter" and nobody can check it. Regulators across Asia are now acting on this:</p>
+<ul>
+  <li><b>India:</b> SEBI bars unregistered finfluencers from making return claims, and launched <b>PaRRVA</b>, an agency whose job is to verify past returns.</li>
+  <li><b>Singapore:</b> MAS rules on digital advertising now reach the content creators who promote financial products.</li>
+  <li><b>Robinhood:</b> verified, copyable trades (Robinhood Social) exist, but only inside its US app. Robinhood Stock Tokens reach 120+ countries where that app isn't available.</li>
+</ul>
+<p>The demand for verified returns is real, and it isn't met where stock tokens are actually sold.</p>
+
+<h2>The solution</h2>
+<p>On Tape, <b>the chain is the verification agency.</b></p>
+<ul>
+  <li><b>Public portfolio vaults.</b> A manager runs a portfolio of stock tokens and USDG. Every trade goes through the vault, so nothing can be hidden, backdated or cherry-picked.</li>
+  <li><b>The tape (Rust on Stylus).</b> Every checkpoint appends the vault's net-of-fee share price to an append-only record. Total return, max drawdown, volatility and Sharpe are <b>computed on-chain</b>, so any contract can gate on them.</li>
+  <li><b>Copy in one click.</b> Followers deposit USDG and receive shares at the Chainlink-priced value.</li>
+  <li><b>Leave anytime, in kind.</b> Redemption pays a pro-rata slice of every holding. It reads no oracle and needs no manager, even on a weekend.</li>
+</ul>
+
+<h2>Why followers can trust a stranger's vault</h2>
+<table>
+  <tr><th>Guarantee</th><th>How it is enforced</th></tr>
+  <tr><td>The manager can't take the money</td><td><code>trade()</code> is the only manager action, and only between USDG and the vault's listed stocks. There is no withdraw path.</td></tr>
+  <tr><td>No trades at a bad price</td><td>Every fill is measured by balance diff and must land within 150 bps of Chainlink.</td></tr>
+  <tr><td>Followers can always leave</td><td>In-kind redemption reads no oracle, so it works on weekends, during feed outages and if the manager vanishes.</td></tr>
+  <tr><td>The track record can't be padded</td><td>Deposits and withdrawals never move share price (invariant-tested), and entry fees go to a treasury, never into the vault.</td></tr>
+  <tr><td>Fees only on real gains</td><td>The performance fee is charged only above the high-water mark.</td></tr>
+</table>
+
+<h2>Built with Arbitrum</h2>
+<ul>
+  <li><b>Arbitrum Stylus:</b> the track-record engine is 13.4 KB of Rust. Its <code>metrics()</code> is up to <b>1.6× cheaper</b> than a bit-identical Solidity reference, and the advantage grows with history length.</li>
+  <li><b>Robinhood Chain</b> (an Arbitrum Orbit chain) and <b>Arbitrum Sepolia</b>: the same contracts are deployed at the same addresses on both.</li>
+  <li><b>Paxos USDG</b> is the deposit asset, the quote asset for every trade, the cash leg of every portfolio and the unit of every fee.</li>
+  <li><b>Chainlink</b> stock feeds price everything, and the vault trades through <b>Uniswap v3</b>.</li>
+</ul>
+
+<h2>Proof</h2>
+<ul>
+  <li><b>Same code, real market:</b> the testnet contracts also ran against Robinhood Chain <b>mainnet</b> state (real USDG, NVDA/AAPL/TSLA tokens, Chainlink feeds and Uniswap pools). Buying $18k of stock cost <b>19 bps</b> vs the oracle.</li>
+  <li><b>32 Foundry tests</b> (unit, fuzz, invariant) plus <b>5 Rust tests</b>. The invariants held across <b>65,536</b> random calls.</li>
+  <li>Four demo vaults replayed <b>69 trading days of real mainnet prices</b> through the contracts, and are labelled "Replay" in the app.</li>
+</ul>
+
+<h3>Key contracts (identical on Robinhood Chain testnet 46630 and Arbitrum Sepolia 421614)</h3>
+<ul>
+  <li>Stylus PerfEngine: <code>0xEF9611533407D99e9c287480955A2923d8d6cC96</code></li>
+  <li>TapeFactory: <code>0x031cBa7db6325aaA1D81533573D2A33B0fcC16Db</code></li>
+  <li>AssetRegistry: <code>0x7fc05a6FE237D5690886EC95BEFdaeFD3cAaF136</code></li>
+</ul>
+</div>
+
+<!-- ============================ PROGRESS ============================ -->
+<p class="tag">Field 2 · Progress During Hackathon</p>
+<div class="field">
+
+<p>Everything in Tape was written during the buildathon, from an empty repository.</p>
+
+<h3>1. Research and de-risking (before any code)</h3>
+<ul>
+  <li>Read the Robinhood Chain docs, the buildathon terms and every project in the gallery to avoid overlap.</li>
+  <li>Checked every dependency against live chain state:
+    <ul>
+      <li>Stylus deploys on Robinhood Chain.</li>
+      <li>Robinhood Stock Tokens transfer freely to contracts.</li>
+      <li>Chainlink stock feeds update 24/5 and already include the ERC-8056 multiplier.</li>
+      <li>Uniswap v3 stock/USDG pools have real depth: a $5k round trip cost 0.1%.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>2. Smart contracts and the Stylus engine</h3>
+<ul>
+  <li><b>Contracts:</b> TapeVault, TapeFactory and AssetRegistry in Solidity, plus the PerfEngine in Rust on Arbitrum Stylus and a bit-identical Solidity reference.</li>
+  <li><b>Tests:</b> 32 Foundry tests (unit, fuzz, invariant) and 5 Rust tests.</li>
+  <li><b>Mainnet fork suite:</b> runs against real USDG, stock tokens, Chainlink and Uniswap; measured 19 bps execution cost.</li>
+  <li><b>Security fix found in testing:</b> keeping entry fees inside the vault let a manager inflate their own track record by churning deposits. Fees now go to a treasury, and an invariant enforces it.</li>
+</ul>
+
+<h3>3. Deployment</h3>
+<ul>
+  <li>Deployed to <b>Robinhood Chain testnet</b> and <b>Arbitrum Sepolia</b> at identical addresses.</li>
+  <li>Robinhood testnet has no stock tokens, feeds or Uniswap, so I deployed stand-ins with the mainnet interfaces. A serverless relay copies live mainnet Chainlink prices into them in one batched transaction.</li>
+  <li>Seeded four manager vaults on each chain by replaying 69 trading days of real mainnet prices through the contracts.</li>
+</ul>
+
+<h3>4. Product</h3>
+<ul>
+  <li>Built a landing page and an app with five screens: Discover, Vault, Portfolio, Manage and Launch.</li>
+  <li>Charts include an equity curve with one tick per on-chain checkpoint, an underwater drawdown chart, a risk/return map, and a look-through portfolio view.</li>
+  <li>Added a one-click <b>Demo wallet</b> funded by a server-side faucet, so judges can try the full flow without bridging.</li>
+  <li>Deployed on Vercel and tested every flow end to end on the live site: copy, exit in kind, launch a vault, trade, stamp a checkpoint.</li>
+</ul>
+
+<h3>5. Benchmarks and materials</h3>
+<ul>
+  <li><b>Stylus vs Solidity gas benchmark:</b> <code>metrics()</code> is 1.11× cheaper at 30 checkpoints and 1.60× at 300.</li>
+  <li>Demo video, README with screenshots and an architecture diagram, and submission assets.</li>
+</ul>
+</div>
+
+<!-- ============================ FUNDRAISING ============================ -->
+<p class="tag">Field 3 · Fundraising Status</p>
+<p class="hint">Check this against your situation before pasting; edit it if you have raised or applied anywhere.</p>
+<div class="field">
+
+<p><b>Not raised. Self-funded and pre-seed.</b> Tape was built from scratch during the buildathon and has taken no outside capital so far.</p>
+
+<h3>What we're looking for</h3>
+<ul>
+  <li><b>An Arbitrum milestone grant</b> to take Tape to Robinhood Chain mainnet. The contracts already run against mainnet state in our fork suite, using real USDG, Stock Tokens, Chainlink and Uniswap.</li>
+  <li><b>Design partners:</b> licensed managers in Asia who need verifiable track records, such as Singapore RFMCs and SEBI-registered advisers.</li>
+  <li>Open to <b>pre-seed conversations</b> after mainnet launch and the first verified vaults.</li>
+</ul>
+
+<h3>Proposed milestones and KPIs</h3>
+<table>
+  <tr><th>Milestone</th><th>Deliverable</th><th>KPI</th></tr>
+  <tr><td>1 · Mainnet</td><td>Deploy on Robinhood Chain mainnet with real USDG and Stock Tokens; engine v2 with packed storage</td><td>Contracts live and verified</td></tr>
+  <tr><td>2 · Managers</td><td>Onboard the first licensed managers and launch their vaults</td><td>Verified vaults launched</td></tr>
+  <tr><td>3 · Followers</td><td>Copy flow for retail users in Asia; allocator vaults that only fund managers with a verified Sharpe</td><td>Value copied (TVL) and checkpoints stamped</td></tr>
+</table>
+</div>
+
+</main>
+</body>
+</html>
