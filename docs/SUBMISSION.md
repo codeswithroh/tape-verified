@@ -17,6 +17,7 @@
 | Project name | Tape |
 | Tagline (short) | Returns you can't fake. Copy trading for tokenized stocks where every return is stamped on-chain. |
 | Logo | `docs/assets/logo.png` (1024×1024) |
+| Images (4 × 1280×720) | `docs/hackquest/1-returns-you-cant-fake.jpg`, `2-discover.jpg`, `3-the-tape.jpg`, `4-copy-exit.jpg` |
 | Banner / cover | `docs/assets/banner.png` (2400×800) or `brag-output/brag.jpg` (1920×1080) |
 | Demo video | Upload `brag-output/brag.mp4` to YouTube (unlisted) and paste the link. Fallback link: https://github.com/codeswithroh/tape-verified/raw/main/brag-output/brag.mp4 |
 | Live demo | https://tape-verified.vercel.app (Connect → Demo wallet) |
