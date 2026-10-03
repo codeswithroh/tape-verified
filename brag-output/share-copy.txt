@@ -1,0 +1,1 @@
+Introducing Tape: copy trading for tokenized stocks where every return is stamped on-chain, so returns can't be faked. Built on Robinhood Chain with a Rust track-record engine on Arbitrum Stylus, settled in USDG. Try it with a one-click demo wallet: https://tape-verified.vercel.app

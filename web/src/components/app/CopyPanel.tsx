@@ -151,9 +151,17 @@ export function CopyPanel({ v }: { v: Vault }) {
               <span className="num text-2xl text-cream">{frac}%</span>
             </div>
             <input type="range" min={1} max={100} value={frac} onChange={(e) => setFrac(Number(e.target.value))} className="tape-range mt-4 w-full" />
-            <div className="mt-1 flex justify-between">
+            {/* labels sit under the thumb's actual position (range 1-100, 14px thumb) */}
+            <div className="relative mt-1 h-4">
               {[25, 50, 75, 100].map((x) => (
-                <button key={x} onClick={() => setFrac(x)} className="num text-[11px] text-dim hover:text-cream">{x}%</button>
+                <button
+                  key={x}
+                  onClick={() => setFrac(x)}
+                  style={{ left: `calc(${(x - 1) / 99} * (100% - 14px) + 7px)`, transform: `translateX(${x === 100 ? "-100%" : "-50%"})` }}
+                  className="absolute num text-[11px] text-dim hover:text-cream"
+                >
+                  {x}%
+                </button>
               ))}
             </div>
             <Label className="mb-2 mt-5">You receive · in kind</Label>

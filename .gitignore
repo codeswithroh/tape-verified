@@ -12,3 +12,4 @@ contracts/broadcast/*/412346/
 scripts/data/*.log
 web/tsconfig.tsbuildinfo
 .claude/
+brag-output/composition/

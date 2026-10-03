@@ -6,6 +6,27 @@
 
 **Networks:** Robinhood Chain testnet (46630) and Arbitrum Sepolia (421614), at identical contract addresses.
 
+**Demo video (65s):** `brag-output/brag.mp4` in the repo. A direct link to it is in *Form fields* below.
+
+---
+
+## Form fields (copy-paste)
+
+| Field | Value |
+|---|---|
+| Project name | Tape |
+| Tagline (short) | Returns you can't fake. Copy trading for tokenized stocks where every return is stamped on-chain. |
+| Logo | `docs/assets/logo.png` (1024×1024) |
+| Banner / cover | `docs/assets/banner.png` (2400×800) or `brag-output/brag.jpg` (1920×1080) |
+| Demo video | Upload `brag-output/brag.mp4` to YouTube (unlisted) and paste the link. Fallback link: https://github.com/codeswithroh/tape-verified/raw/main/brag-output/brag.mp4 |
+| Live demo | https://tape-verified.vercel.app (Connect → Demo wallet) |
+| GitHub | https://github.com/codeswithroh/tape-verified |
+| Chains | Robinhood Chain testnet (46630), Arbitrum Sepolia (421614) |
+| Arbitrum tech | Arbitrum Stylus (Rust track-record engine), Robinhood Chain (an Arbitrum Orbit chain) |
+| USDG | Yes: deposit asset, quote asset, cash leg and fee unit |
+| Key contracts | Stylus engine `0xEF9611533407D99e9c287480955A2923d8d6cC96` · TapeFactory `0x031cBa7db6325aaA1D81533573D2A33B0fcC16Db` · AssetRegistry `0x7fc05a6FE237D5690886EC95BEFdaeFD3cAaF136` (same on both chains) |
+| Description | Use the sections below (Problem → Path to mainnet) |
+
 ---
 
 ## Problem
