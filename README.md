@@ -114,31 +114,29 @@ On Tape, **the chain is the verification agency.**
 
 ## 📸 Screenshots
 
-<table>
-<tr>
-<td colspan="2"><img src="docs/readme/landing.jpg" alt="Landing page" /><p align="center"><sub><b>Landing:</b> a fake +312% post next to a receipt printed live from the chain</sub></p></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/readme/discover.jpg" alt="Discover leaderboard" /><p align="center"><sub><b>Discover:</b> verified vaults, the leader's equity curve, a risk/return map</sub></p></td>
-<td width="50%"><img src="docs/readme/vault.jpg" alt="Vault page" /><p align="center"><sub><b>Vault:</b> one tick per on-chain checkpoint, drawdown, Stylus-computed metrics, the tape</sub></p></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/readme/copy.jpg" alt="Copied position" /><p align="center"><sub><b>Copy:</b> $1,000 in, $998.00 stake after the 0.2% entry fee</sub></p></td>
-<td width="50%"><img src="docs/readme/portfolio.jpg" alt="Portfolio" /><p align="center"><sub><b>Portfolio:</b> look-through exposure across every copied vault</sub></p></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/readme/create.jpg" alt="Launch a vault" /><p align="center"><sub><b>Launch:</b> pick a universe, set a fee, seed with your own USDG</sub></p></td>
-<td width="50%">
-<table>
-<tr>
-<td><img src="docs/readme/copy-panel.jpg" alt="Copy panel" /></td>
-<td><img src="docs/readme/exit-panel.jpg" alt="Exit panel" /></td>
-</tr>
-</table>
-<p align="center"><sub><b>Copy / Exit panels:</b> shares at oracle NAV in; a slice of every stock out</sub></p>
-</td>
-</tr>
-</table>
+<p align="center">
+  <img src="docs/readme/landing.jpg" alt="Landing page" width="100%" />
+  <br /><sub><b>Landing:</b> a fake +312% post next to a receipt printed live from the chain</sub>
+</p>
+
+<p align="center">
+  <img src="docs/readme/discover.jpg" alt="Discover leaderboard" width="49%" />
+  <img src="docs/readme/vault.jpg" alt="Vault page" width="49%" />
+  <br /><sub><b>Discover:</b> verified vaults, the leader's equity curve, a risk/return map &nbsp;·&nbsp; <b>Vault:</b> one tick per on-chain checkpoint, drawdown, Stylus-computed metrics, the tape</sub>
+</p>
+
+<p align="center">
+  <img src="docs/readme/copy.jpg" alt="Copied position" width="49%" />
+  <img src="docs/readme/portfolio.jpg" alt="Portfolio" width="49%" />
+  <br /><sub><b>Copy:</b> $1,000 in, $998.00 stake after the 0.2% entry fee &nbsp;·&nbsp; <b>Portfolio:</b> look-through exposure across every copied vault</sub>
+</p>
+
+<p align="center">
+  <img src="docs/readme/create.jpg" alt="Launch a vault" width="58%" />
+  <img src="docs/readme/copy-panel.jpg" alt="Copy panel" width="19%" />
+  <img src="docs/readme/exit-panel.jpg" alt="Exit panel" width="19%" />
+  <br /><sub><b>Launch:</b> pick a universe, set a fee, seed with your own USDG &nbsp;·&nbsp; <b>Copy / Exit:</b> shares at oracle NAV in; a slice of every stock out</sub>
+</p>
 
 <details>
 <summary><b>📱 Mobile</b></summary>
@@ -152,17 +150,7 @@ On Tape, **the chain is the verification agency.**
 
 ## ⚙️ How it works
 
-```mermaid
-flowchart LR
-    F([Follower]) -- "deposit USDG" --> V[TapeVault]
-    V -- "redeem: pro-rata, in kind,<br/>no oracle" --> F
-    M([Manager]) -- "trade(): USDG ↔ listed stock<br/>within 150 bps of Chainlink" --> V
-    V -- "swap" --> R[Uniswap v3 SwapRouter02<br/><i>testnet: same-ABI mock</i>]
-    V -- "checkpoint():<br/>net-of-fee price per share" --> E[["PerfEngine<br/>Rust on Arbitrum Stylus"]]
-    E -- "metrics(vault):<br/>return · drawdown · vol · Sharpe" --> L[Leaderboard / any contract]
-    G[AssetRegistry<br/>token → Chainlink feed] -.-> V
-    FA[TapeFactory<br/>seed + genesis stamp] -.-> V
-```
+<p align="center"><img src="docs/readme/architecture.jpg" alt="Tape architecture: follower, manager, TapeVault, Uniswap router, Stylus PerfEngine, registry and factory" width="100%" /></p>
 
 1. **Launch.** `TapeFactory` creates a vault with a fixed asset list, takes the manager's own USDG seed (skin in the game) and stamps the genesis checkpoint.
 2. **Trade.** The manager's only power is `trade()`: USDG ↔ a listed stock token through the router. The vault measures the fill by balance diff and reverts if it lands outside the oracle band.
